@@ -126,10 +126,10 @@ my $countries = {
 };
 
 my $status_lookup = {
-  'Event-2-'   => { const => 'not_started', post => 0, print => 'not started yet.' },
-  'Event-4-'   => { const => 'started'    , post => 1, print => 'game started.'    },
-  'Event-7-'   => { const => 'finished'   , post => 0, print => 'final score.'     },
-  'Event-999-' => { const => 'over'       , post => 1, print => 'final score.'     },
+  'Event-2-'   => { const => 'not_started', post => 0, score => 0, print => 'not started yet.' },
+  'Event-4-'   => { const => 'started'    , post => 1, score => 0, print => 'game started.'    },
+  'Event-7-'   => { const => 'finished'   , post => 0, score => 0, print => 'final score.'     },
+  'Event-999-' => { const => 'over'       , post => 1, score => 1, print => 'final score.'     },
 };
 
 my ($games, $last_status);
@@ -180,8 +180,8 @@ while (my ($key,$game) = each %$games){
       my $main =
         $countries->{$game->{a}}->{flag} . ' ' .
         $countries->{$game->{a}}->{name} . ' ' .
-        ($game->{a_score} // '') . '-'   .
-        ($game->{b_score} // '') . ' '   .
+        ($status->{score} ? ($game->{a_score} // '') : '') . '-' .
+        ($status->{score} ? ($game->{b_score} // '') : '') . ' ' .
         $countries->{$game->{b}}->{name} . ' ' .
         $countries->{$game->{b}}->{flag};
       my $desc = $game->{display_text} . ', ' .
